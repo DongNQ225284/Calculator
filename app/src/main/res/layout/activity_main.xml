@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnSign"
+        style="@style/buttonOperator"
+        android:layout_marginBottom="10dp"
+        android:text="@string/sign"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn1" />
+
+    <Button
+        android:id="@+id/btn0"
+        style="@style/buttonNumber"
+        android:layout_marginBottom="10dp"
+        android:text="@string/zero"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnDot"
+        app:layout_constraintStart_toEndOf="@+id/btnSign"
+        app:layout_constraintTop_toBottomOf="@+id/btn2" />
+
+    <Button
+        android:id="@+id/btnDot"
+        style="@style/buttonOperator"
+        android:layout_marginBottom="10dp"
+        android:text="@string/dot"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnEqual"
+        app:layout_constraintStart_toEndOf="@+id/btn0"
+        app:layout_constraintTop_toBottomOf="@+id/btn3" />
+
+    <Button
+        android:id="@+id/btnEqual"
+        style="@style/buttonOperator"
+        android:layout_marginBottom="10dp"
+        android:text="@string/equal"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnDot"
+        app:layout_constraintTop_toBottomOf="@+id/btnPlus" />
+
+    <Button
+        android:id="@+id/btn1"
+        android:text="@string/one"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSign"
+        app:layout_constraintEnd_toStartOf="@+id/btn2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn4"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:text="@string/two"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn0"
+        app:layout_constraintEnd_toStartOf="@+id/btn3"
+        app:layout_constraintStart_toEndOf="@+id/btn1"
+        app:layout_constraintTop_toBottomOf="@+id/btn5"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:text="@string/three"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnDot"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlus"
+        app:layout_constraintStart_toEndOf="@+id/btn2"
+        app:layout_constraintTop_toBottomOf="@+id/btn6"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btnPlus"
+        android:text="@string/plus"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnEqual"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn3"
+        app:layout_constraintTop_toBottomOf="@+id/btnSub"
+        style="@style/buttonOperator" />
+
+    <Button
+        android:id="@+id/btn4"
+        android:text="@string/four"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn1"
+        app:layout_constraintEnd_toStartOf="@+id/btn5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn7"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btn5"
+        android:text="@string/five"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn2"
+        app:layout_constraintEnd_toStartOf="@+id/btn6"
+        app:layout_constraintStart_toEndOf="@+id/btn4"
+        app:layout_constraintTop_toBottomOf="@+id/btn8"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btn6"
+        android:text="@string/six"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn3"
+        app:layout_constraintEnd_toStartOf="@+id/btnSub"
+        app:layout_constraintStart_toEndOf="@+id/btn5"
+        app:layout_constraintTop_toBottomOf="@+id/btn9"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btnSub"
+        android:text="@string/sub"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnPlus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn6"
+        app:layout_constraintTop_toBottomOf="@+id/btnTimes"
+        style="@style/buttonOperator" />
+
+    <Button
+        android:id="@+id/btn7"
+        android:text="@string/seven"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn4"
+        app:layout_constraintEnd_toStartOf="@+id/btn8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCE"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btn8"
+        android:text="@string/eight"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn5"
+        app:layout_constraintEnd_toStartOf="@+id/btn9"
+        app:layout_constraintStart_toEndOf="@+id/btn7"
+        app:layout_constraintTop_toBottomOf="@+id/btnC"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btn9"
+        android:text="@string/nine"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn6"
+        app:layout_constraintEnd_toStartOf="@+id/btnTimes"
+        app:layout_constraintStart_toEndOf="@+id/btn8"
+        app:layout_constraintTop_toBottomOf="@+id/btnBS"
+        style="@style/buttonNumber" />
+
+    <Button
+        android:id="@+id/btnTimes"
+        android:text="@string/times"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSub"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn9"
+        app:layout_constraintTop_toBottomOf="@+id/btnDiv"
+        style="@style/buttonOperator" />
+
+    <Button
+        android:id="@+id/btnCE"
+        style="@style/buttonOperator"
+        android:layout_marginTop="30dp"
+        android:text="@string/CE"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn7"
+        app:layout_constraintEnd_toStartOf="@+id/btnC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvKQ" />
+
+    <Button
+        android:id="@+id/btnC"
+        style="@style/buttonOperator"
+        android:layout_marginTop="30dp"
+        android:text="@string/C"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn8"
+        app:layout_constraintEnd_toStartOf="@+id/btnBS"
+        app:layout_constraintStart_toEndOf="@+id/btnCE"
+        app:layout_constraintTop_toBottomOf="@+id/tvKQ" />
+
+    <Button
+        android:id="@+id/btnBS"
+        style="@style/buttonOperator"
+        android:layout_marginTop="30dp"
+        android:text="@string/BS"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn9"
+        app:layout_constraintEnd_toStartOf="@+id/btnDiv"
+        app:layout_constraintStart_toEndOf="@+id/btnC"
+        app:layout_constraintTop_toBottomOf="@+id/tvKQ" />
+
+    <Button
+        android:id="@+id/btnDiv"
+        style="@style/buttonOperator"
+        android:layout_marginTop="30dp"
+        android:text="@string/div"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnTimes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnBS"
+        app:layout_constraintTop_toBottomOf="@+id/tvKQ" />
+
+    <TextView
+        android:id="@+id/tvCT"
+        android:layout_width="381dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="5dp"
+        android:gravity="end"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvKQ"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvKQ"
+        android:layout_width="380dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="5dp"
+        android:gravity="end"
+        android:hint="@string/zero"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCT" />
+</androidx.constraintlayout.widget.ConstraintLayout>
