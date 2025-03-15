@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                     operator = button.text.toString()
                     binding.tvCT.text = res.toString() + operator
                     btn = button.text.toString()
+                    dot = false
                     return@setOnClickListener
                 }
                 var textKQ = binding.tvKQ.text.toString()
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                 binding.tvKQ.text = textKQ
 
                 operator = button.text.toString()
+                dot = false
                 btn = button.text.toString()
             }
         }
@@ -164,8 +166,10 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             var textKQ = binding.tvKQ.text.toString()
-            if (textKQ.last() == '.') dot = false
-            if (textKQ.isNotEmpty()) textKQ = textKQ.dropLast(1)
+            if (textKQ.isNotEmpty()) {
+                if (textKQ.last() == '.') dot = false
+                textKQ = textKQ.dropLast(1)
+            }
             binding.tvKQ.text = textKQ
             btn = "BS"
         }
