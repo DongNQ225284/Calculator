@@ -9,10 +9,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var ans = 0.0
     private var number = 0.0
-    private var operator = "null"
-    private var flag = true
+    private var error = false
     private var dot = false
-    private var state = "activity"
+    private var operator = "null"
+    private var btn = "null"
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,27 +21,22 @@ class MainActivity : AppCompatActivity() {
         val numbers = listOf(
             binding.btn0, binding.btn1, binding.btn2, binding.btn3,
             binding.btn4, binding.btn5, binding.btn6, binding.btn7,
-            binding.btn8, binding.btn9, binding.btnDot
+            binding.btn8, binding.btn9
         )
         for (button in numbers) {
             button.setOnClickListener {
-                if (state == "clear") {
+                if (error || btn == "=") {
                     binding.tvCT.text = ""
                     binding.tvKQ.text = ""
-                    state = "activity"
                     operator = "null"
+                    error = false
                     dot = false
+                    ans = 0.0
                 }
-                if (button.id != R.id.btnDot) {
-                    binding.tvKQ.text = binding.tvKQ.text.toString() + button.text.toString()
-                } else if (!dot) {
-                    if (binding.tvKQ.text.toString().isEmpty()) {
-                        binding.tvKQ.text = "0."
-                    } else {
-                        binding.tvKQ.text = binding.tvKQ.text.toString() + button.text.toString()
-                    }
-                    dot = true
-                }
+                var textKQ = binding.tvKQ.text.toString()
+                if (button.id != R.id.btn0 || textKQ.isNotEmpty()) textKQ += button.text.toString()
+                binding.tvKQ.text = textKQ
+                btn = button.text.toString()
             }
         }
         val operators = listOf(
@@ -49,138 +44,154 @@ class MainActivity : AppCompatActivity() {
         )
         for (button in operators) {
             button.setOnClickListener {
-                dot = false
-                if (state == "clear") {
-                    binding.tvCT.text = ""
-                    binding.tvKQ.text = ""
-                    state = "activity"
+                if (error) return@setOnClickListener
+                if (btn in listOf("+", "-", "*", "/")) {
+                    val res : Number = if(ans.rem(1) == 0.0) ans.toInt() else ans
+                    operator = button.text.toString()
+                    binding.tvCT.text = res.toString() + operator
+                    btn = button.text.toString()
+                    return@setOnClickListener
                 }
-                if (binding.tvKQ.text.toString().isEmpty()) {
-                    operator = "null"
-                    number = ans
-                } else {
-                    number = binding.tvKQ.text.toString().toDouble()
-                }
-                flag = true
+                var textKQ = binding.tvKQ.text.toString()
+                var textCT = binding.tvCT.text.toString()
+                number = textKQ.toDoubleOrNull()?:0.0
                 when(operator) {
-                    "plus" -> ans += number
-                    "sub" -> ans -= number
-                    "div" -> {
-                        if (number != 0.0) {
-                            ans /= number
-                        } else {
-                            flag = false
-                        }
-                    }
-                    "times" -> ans *= number
                     "null" -> ans = number
+                    "+" -> ans += number
+                    "-" -> ans -= number
+                    "*" -> ans *= number
+                    "/" -> {
+                        if (number != 0.0) ans /= number
+                        else error = true
+                    }
                 }
-                when(button.id) {
-                    R.id.btnPlus -> operator = "plus"
-                    R.id.btnSub -> operator = "sub"
-                    R.id.btnDiv -> operator = "div"
-                    R.id.btnTimes -> operator = "times"
-                }
-                if (flag) {
-                    val result: Number = if (ans.rem(1) == 0.0) ans.toInt() else ans
-                    binding.tvCT.text = result.toString() + button.text.toString()
-                    binding.tvKQ.text = ""
-                } else {
-                    binding.tvCT.text = "Error!"
-                    binding.tvKQ.text = "Cannot divide by zero"
-                    state = "clear"
-                }
+
+                //val num : Number = if(number.rem(1) == 0.0) number.toInt() else number
+                val res : Number = if(ans.rem(1) == 0.0) ans.toInt() else ans
+                textCT = res.toString() + button.text.toString()
+                textKQ = if (error) "Cannot divide by 0!" else ""
+                binding.tvCT.text = textCT
+                binding.tvKQ.text = textKQ
+
+                operator = button.text.toString()
+                btn = button.text.toString()
             }
         }
+
+        binding.btnDot.setOnClickListener {
+            if (error || dot) return@setOnClickListener
+            if (btn == "=") {
+                dot = true
+                binding.tvCT.text = ""
+                binding.tvKQ.text = "0."
+                return@setOnClickListener
+            }
+            dot = true
+            var textKQ = binding.tvKQ.text.toString()
+            textKQ += if (textKQ.isEmpty()) "0." else "."
+            binding.tvKQ.text = textKQ
+            btn = "dot"
+        }
+
         binding.btnSign.setOnClickListener {
-            if (state == "clear") {
+            if (error) return@setOnClickListener
+            if (btn == "=") {
+                binding.tvCT.text = ""
+            }
+            var textKQ = binding.tvKQ.text.toString()
+            textKQ = if (textKQ.first() == '-') textKQ.drop(1) else "-$textKQ"
+            binding.tvKQ.text = textKQ
+            btn = "sign"
+        }
+
+        binding.btnEqual.setOnClickListener {
+            if (error) {
                 binding.tvCT.text = ""
                 binding.tvKQ.text = ""
-                state = "activity"
+                operator = "null"
+                error = false
                 dot = false
+                ans = 0.0
+                btn = "="
+                return@setOnClickListener
             }
-            if (binding.tvKQ.text.toString() != "") {
-                var s = binding.tvKQ.text.toString()
-                if (s.first() != '-') {
-                    binding.tvKQ.text = "-$s"
-                } else {
-                    s = s.drop(1)
-                    binding.tvKQ.text = s
+            if (btn == "=") {
+                number = binding.tvKQ.text.toString().toDoubleOrNull()?:0.0
+                val num : Number = if(number.rem(1) == 0.0) number.toInt() else number
+                binding.tvCT.text = "$num="
+                binding.tvKQ.text = num.toString()
+                dot = false
+                btn = "="
+                return@setOnClickListener
+            }
+            var textKQ = binding.tvKQ.text.toString()
+            var textCT = binding.tvCT.text.toString()
+            number = textKQ.toDoubleOrNull()?:0.0
+            when(operator) {
+                "null" -> ans = number
+                "+" -> ans += number
+                "-" -> ans -= number
+                "*" -> ans *= number
+                "/" -> {
+                    if (number != 0.0) ans /= number
+                    else error = true
                 }
             }
+
+            //
+            val num : Number = if(number.rem(1) == 0.0) number.toInt() else number
+            val res : Number = if(ans.rem(1) == 0.0) ans.toInt() else ans
+
+            textCT = "$textCT$num="
+            textKQ = if (error) "Cannot divide by 0!" else res.toString()
+            binding.tvCT.text = textCT
+            binding.tvKQ.text = textKQ
+            operator = "null"
+            dot = false
+            btn = "="
+        }
+
+
+        binding.btnBS.setOnClickListener {
+            if (error) {
+                binding.tvCT.text = ""
+                binding.tvKQ.text = ""
+                operator = "null"
+                error = false
+                dot = false
+                ans = 0.0
+                btn = "BS"
+                return@setOnClickListener
+            }
+            var textKQ = binding.tvKQ.text.toString()
+            if (textKQ.last() == '.') dot = false
+            if (textKQ.isNotEmpty()) textKQ = textKQ.dropLast(1)
+            binding.tvKQ.text = textKQ
+            btn = "BS"
+        }
+        binding.btnCE.setOnClickListener {
+            if (error) {
+                binding.tvCT.text = ""
+                binding.tvKQ.text = ""
+                operator = "null"
+                error = false
+                dot = false
+                ans = 0.0
+                btn = "CE"
+                return@setOnClickListener
+            }
+            binding.tvKQ.text = ""
+            dot = false
+            btn = "CE"
         }
         binding.btnC.setOnClickListener {
             binding.tvCT.text = ""
             binding.tvKQ.text = ""
-            ans = 0.0
-            state = "activity"
             operator = "null"
+            error = false
             dot = false
-        }
-        binding.btnCE.setOnClickListener {
-            if (state == "clear") {
-                binding.tvCT.text = ""
-                binding.tvKQ.text = ""
-                state = "activity"
-                ans = 0.0
-            }
-            binding.tvKQ.text = ""
-            dot = false
-        }
-        binding.btnBS.setOnClickListener {
-            if (state == "clear") {
-                binding.tvCT.text = ""
-                binding.tvKQ.text = ""
-                state = "activity"
-                dot = false
-            }
-            if (binding.tvKQ.text.toString() != "") {
-                var s = binding.tvKQ.text.toString()
-                if (s.last() == '.') {
-                    dot = false
-                }
-                s = s.dropLast(1)
-                binding.tvKQ.text = s
-            }
-        }
-        binding.btnEqual.setOnClickListener {
-            if (state == "clear") {
-                binding.tvCT.text = ""
-                binding.tvKQ.text = ""
-                state = "activity"
-                dot = false
-            }
-            val s = binding.tvKQ.text.toString()
-            number = s.toDoubleOrNull()?:0.0
-            flag = true
-            when(operator) {
-                "plus" -> ans += number
-                "sub" -> ans -= number
-                "div" -> {
-                    if (number != 0.0) {
-                        ans /= number
-                    } else {
-                        flag = false
-                    }
-                }
-                "times" -> ans *= number
-                "null" -> ans = number
-            }
-            if (s.isEmpty()) {
-                binding.tvCT.text = binding.tvCT.text.toString() + "0 ="
-            } else if (s.first() != '-') {
-                binding.tvCT.text = binding.tvCT.text.toString() + number + "="
-            } else {
-                binding.tvCT.text = binding.tvCT.text.toString() + "(" + number + ") ="
-            }
-            if (flag) {
-                val result: Number = if (ans.rem(1) == 0.0) ans.toInt() else ans
-                binding.tvKQ.text = result.toString()
-            } else {
-                binding.tvCT.text = "Error!"
-                binding.tvKQ.text = "Cannot divide by zero"
-            }
-            state = "clear"
+            ans = 0.0
+            btn = "C"
         }
     }
 }
