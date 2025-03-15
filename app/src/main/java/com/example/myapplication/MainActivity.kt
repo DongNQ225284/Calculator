@@ -45,7 +45,8 @@ class MainActivity : AppCompatActivity() {
         for (button in operators) {
             button.setOnClickListener {
                 if (error) return@setOnClickListener
-                if (btn in listOf("+", "-", "*", "/")) {
+                var textKQ = binding.tvKQ.text.toString()
+                if (textKQ.isEmpty()) {
                     val res : Number = if(ans.rem(1) == 0.0) ans.toInt() else ans
                     operator = button.text.toString()
                     binding.tvCT.text = res.toString() + operator
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                     dot = false
                     return@setOnClickListener
                 }
-                var textKQ = binding.tvKQ.text.toString()
                 var textCT = binding.tvCT.text.toString()
                 number = textKQ.toDoubleOrNull()?:0.0
                 when(operator) {
