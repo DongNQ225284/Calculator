@@ -84,10 +84,13 @@ class MainActivity : AppCompatActivity() {
             if (error || dot) return@setOnClickListener
             if (btn == "=") {
                 dot = true
+                error = false
                 binding.tvCT.text = ""
                 binding.tvKQ.text = "0."
+                btn = "dot"
                 return@setOnClickListener
             }
+            error = false
             dot = true
             var textKQ = binding.tvKQ.text.toString()
             textKQ += if (textKQ.isEmpty()) "0." else "."
