@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnBS.setOnClickListener {
-            if (error) {
+            if (error || btn == "=") {
                 binding.tvCT.text = ""
                 binding.tvKQ.text = ""
                 operator = "null"
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
             btn = "BS"
         }
         binding.btnCE.setOnClickListener {
-            if (error) {
+            if (error || btn == "=") {
                 binding.tvCT.text = ""
                 binding.tvKQ.text = ""
                 operator = "null"
