@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                 binding.tvCT.text = ""
             }
             var textKQ = binding.tvKQ.text.toString()
+            if (textKQ.isEmpty()) return@setOnClickListener
             textKQ = if (textKQ.first() == '-') textKQ.drop(1) else "-$textKQ"
             binding.tvKQ.text = textKQ
             btn = "sign"
@@ -147,7 +148,7 @@ class MainActivity : AppCompatActivity() {
             val num : Number = if(number.rem(1) == 0.0) number.toInt() else number
             val res : Number = if(ans.rem(1) == 0.0) ans.toInt() else ans
 
-            textCT = "$textCT$num="
+            textCT = if (number < 0.0) "$textCT($num)=" else "$textCT$num="
             textKQ = if (error) "Cannot divide by 0!" else res.toString()
             binding.tvCT.text = textCT
             binding.tvKQ.text = textKQ
